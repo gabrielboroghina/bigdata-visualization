@@ -7,11 +7,7 @@ const CovidInfoSchema = new Schema({
         type: Date,
         required: true
     },
-    year: {
-        type: String,
-        required: true
-    },
-    week: {
+    year_week: {
         type: String,
         required: true
     },
@@ -43,7 +39,7 @@ const CovidInfoSchema = new Schema({
         type: String,
         required: true
     },
-    notificationRatePer100000Population14Days: {
+    notification_rate_per_100000_population_14_days: {
         type: String,
         required: true
     },

@@ -1,4 +1,4 @@
-dateRep,year_week,cases_weekly,deaths_weekly,countriesAndTerritories,geoId,countryterritoryCode,popData2019,continentExp,notification_rate_per_100000_population_14-days
+dateRep,year_week,cases_weekly,deaths_weekly,countriesAndTerritories,geoId,countryterritoryCode,popData2019,continentExp,notification_rate_per_100000_population_14_days
 18/01/2021,2021-02,557,45,Afghanistan,AF,AFG,38041757,Asia,3.24
 11/01/2021,2021-01,675,71,Afghanistan,AF,AFG,38041757,Asia,4.15
 04/01/2021,2020-53,902,60,Afghanistan,AF,AFG,38041757,Asia,7.61
