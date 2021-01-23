@@ -4,11 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import "bootstrap/dist/css/bootstrap.css";
+// import "./assets/css/paper-dashboard.css";
+// import "./assets/demo/demo.css";
+// import "perfect-scrollbar/css/perfect-scrollbar.css";
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+      <App/>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
