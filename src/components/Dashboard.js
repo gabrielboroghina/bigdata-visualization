@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import * as Datamap from "datamaps";
-import {BarChart} from "./visualization/visualization";
-import {getCountryData} from "./api-bridge";
+import {BarChart} from "./BarChart";
+import {getCountryData} from "../api-bridge";
 
 const Dashboard = () => {
   const [countryData, setCountryData] = useState(null);
@@ -49,18 +49,18 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/*<div className="app-row">*/}
-        {/*  <div className="app-col">*/}
-        {/*    <div className="app-card">*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*  <div className="app-col">*/}
-        {/*    <div className="app-card">*/}
-        {/*      chart*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-        {/*<BarChart data={countryData}/>*/}
+        <div className="app-row">
+          <div className="app-col">
+            <div className="app-card" style={{padding: "10px 10px 20px 10px", height: 400}}>
+              <BarChart data={countryData}/>
+            </div>
+          </div>
+          <div className="app-col">
+            <div className="app-card">
+            </div>
+          </div>
+        </div>
+
       </div>
   )
 };
