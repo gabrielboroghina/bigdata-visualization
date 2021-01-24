@@ -18,14 +18,21 @@ export class BarChart extends Component {
   createBarChart() {
     this.node.innerHTML = ''; // clear the chart before drawing new data
 
-    const margin = {top: 20, right: 10, bottom: 34, left: 60}
+    const margin = {top: 25, right: 10, bottom: 34, left: 60}
     const height = 400;
     const width = 600;
 
     const data = this.props.data;
     if (!data) return;
 
-    const color = d3.scaleOrdinal(["M", "F"], ["#4e79a7", "#e15759"]);
+    const svg = d3.select(this.node)
+        // Responsive SVG needs these 2 attributes and no width and height attr.
+        .attr("preserveAspectRatio", "none")
+        .attr("viewBox", "0 0 600 400")
+        .attr("height", "100%")
+        .attr("width", "100%")
+        // Class to make it responsive.
+        .classed("svg-content-responsive", true);
 
     let weekToId = {};
     data.forEach((d, i) => weekToId[d.year_week] = i);
@@ -33,7 +40,7 @@ export class BarChart extends Component {
     const x = d3.scaleLinear()
         .domain([1, data.length])
         .range([margin.left, width - margin.right]);
-    console.log([0, d3.max(data, d => d.cases)])
+
     const y = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.cases)]).nice()
         .range([height - margin.bottom, margin.top]);
@@ -59,24 +66,40 @@ export class BarChart extends Component {
             .attr("font-weight", "bold")
             .text("Number of cases"));
 
-    const svg = d3.select(this.node)
-        // Responsive SVG needs these 2 attributes and no width and height attr.
-        .attr("preserveAspectRatio", "none")
-        .attr("viewBox", "0 0 600 400")
-        .attr("height", "100%")
-        .attr("width", "100%")
-        // Class to make it responsive.
-        .classed("svg-content-responsive", true);
+    const color = {
+      "cases": "#0f7a86",
+      "deaths": "#e15759"
+    };
+    const legendX = {
+      "cases": 15,
+      "deaths": 115
+    };
+    const legend = {
+      "cases": "New cases",
+      "deaths": "Deaths"
+    };
 
-    svg.append("g")
-        .attr("fill", "steelblue")
-        .selectAll("rect")
-        .data(data)
-        .join("rect")
-        .attr("x", d => x(weekToId[d.year_week]) + 1)
-        .attr("width", d => Math.max(0, x(weekToId[d.year_week] + 1) - x(weekToId[d.year_week]) - 1))
-        .attr("y", d => y(d.cases))
-        .attr("height", d => y(0) - y(d.cases));
+    for (const metric of ["cases", "deaths"]) {
+      // Legend
+      svg.append("rect")
+          .attr("x", legendX[metric]).attr("y", 0)
+          .attr("width", 10).attr("height", 10)
+          .style("fill", color[metric])
+      svg.append("text")
+          .attr("x", legendX[metric] + 15).attr("y", 6)
+          .text(legend[metric]).style("font-size", "10px")
+          .attr("alignment-baseline", "middle")
+
+      svg.append("g")
+          .attr("fill", color[metric])
+          .selectAll("rect")
+          .data(data)
+          .join("rect")
+          .attr("x", d => x(weekToId[d.year_week]) + 1)
+          .attr("width", d => Math.max(0, x(weekToId[d.year_week] + 1) - x(weekToId[d.year_week]) - 1))
+          .attr("y", d => y(d[metric]))
+          .attr("height", d => y(0) - y(d[metric]));
+    }
 
     svg.append("g").call(xAxis);
     svg.append("g").call(yAxis);

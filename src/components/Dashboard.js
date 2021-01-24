@@ -6,18 +6,6 @@ import {getCountryData} from "../api-bridge";
 const Dashboard = () => {
   const [countryData, setCountryData] = useState(null);
 
-  // const [dimensions, setDimensions] = useState({
-  //   height: window.innerHeight,
-  //   width: window.innerWidth
-  // });
-  // useEffect(() => {
-  //   const handleResize = () => setDimensions({
-  //     height: window.innerHeight,
-  //     width: window.innerWidth
-  //   });
-  //   window.addEventListener('resize', handleResize);
-  // });
-
   const loadCountryData = async (countryId) => {
     const data = await getCountryData(countryId);
     console.log("Loading data for country: ", countryId, data);
