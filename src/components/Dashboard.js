@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import * as Datamap from "datamaps";
-import {scaleLinear, interpolateBlues} from 'd3'
+import {scaleLog, interpolateTurbo} from 'd3'
 
 import {getCountryData, getAll} from "../api-bridge";
 import {BarChart} from "./BarChart";
@@ -31,17 +31,17 @@ const Dashboard = () => {
     const data = await getAll();
     console.log("Loading data for all countrie: ", data);
     var keys = Object.keys(data);
-    var rates = [];
+    var cases = [];
     keys.forEach(function(key){
-      rates.push(data[key].rate);
+      cases.push(data[key].cases);
     });
 
-    var minValue = Math.min.apply(null, rates),
-    maxValue = Math.max.apply(null, rates);
+    var minValue = Math.min.apply(null, cases),
+    maxValue = Math.max.apply(null, cases);
 
     // create color palette function
     // color can be whatever you wish
-    var paletteScale = scaleLinear().domain([minValue, maxValue]).range([0.2, 1, 0.1]); // red color
+    var paletteScale = scaleLog().domain([minValue, maxValue]).range([0, 1, 0.1]); // red color
 
     var dataset = {};
     // fill dataset in appropriate format
@@ -51,7 +51,7 @@ const Dashboard = () => {
       cases = data[key].cases,
       deaths = data[key].deaths,
       rate = data[key].rate;
-      dataset[iso] = { cases: cases, deaths: deaths, rate: rate, fillColor: interpolateBlues(paletteScale(rate)) };
+      dataset[iso] = { cases: cases, deaths: deaths, rate: rate, fillColor: interpolateTurbo(paletteScale(cases)) };
     });
     setCountriesData(dataset);
   };
