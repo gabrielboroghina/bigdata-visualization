@@ -10,6 +10,7 @@
     "bootstrap": "^4.6.0",
     "d3": "^6.4.0",
     "datamaps": "^0.5.9",
+    "hsl-to-hex": "^1.0.0",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
