@@ -19,7 +19,7 @@ const getByCountryCode = async (countryCode) => {
 };
 
 const getAll = async () => {
-    covidInfosMap = {};
+    const covidInfosMap = {};
     const covidInfos = await CovidInfos.find().sort({countryterritoryCode: 1});
 
     covidInfos.map(info => {
