@@ -8,11 +8,11 @@ const getByCountryCode = async (countryCode) => {
     return covidInfos.map(info => {
         const fields = info.year_week.split("-");
         return {
-            year: fields[0],
-            week: fields[1],
+            year: parseInt(fields[0]),
+            week: parseInt(fields[1]),
             year_week: info.year_week,
-            cases: info.cases_weekly,
-            deaths: info.deaths_weekly
+            cases: parseInt(info.cases_weekly),
+            deaths: parseInt(info.deaths_weekly)
         };
     });
 };

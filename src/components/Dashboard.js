@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import * as Datamap from "datamaps";
-import {scaleLinear, mean, deviation, interpolateTurbo, interpolateRdYlGn, interpolateReds, interpolateBlues, interpolateRgb, interpolateOrRd} from 'd3'
+import {scaleLinear, interpolateBlues} from 'd3'
 
-import {BarChart} from "./visualization/visualization";
-import {getCountryData, getAll} from "./api-bridge";
+import {getCountryData, getAll} from "../api-bridge";
+import {BarChart} from "./BarChart";
 
 const Dashboard = () => {
   const [countryData, setCountryData] = useState(null);
@@ -95,18 +95,18 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/*<div className="app-row">*/}
-        {/*  <div className="app-col">*/}
-        {/*    <div className="app-card">*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*  <div className="app-col">*/}
-        {/*    <div className="app-card">*/}
-        {/*      chart*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-        {/*<BarChart data={countryData}/>*/}
+        <div className="app-row">
+          <div className="app-col">
+            <div className="app-card" style={{padding: "10px 10px 20px 10px", height: 400}}>
+              <BarChart data={countryData}/>
+            </div>
+          </div>
+          <div className="app-col">
+            <div className="app-card">
+            </div>
+          </div>
+        </div>
+
       </div>
   )
 };

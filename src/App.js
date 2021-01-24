@@ -1,7 +1,7 @@
 import './App.css';
 import React from "react";
 import virusIcon from "./virus-icon.svg";
-import Dashboard from "./Dashboard";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
