@@ -1,5 +1,6 @@
 const express = require('express');
-const morgan = require('morgan'); //middleware de logare
+const morgan = require('morgan');
+const cors = require('cors');
 
 const routes = require('./routes');
 
@@ -8,6 +9,12 @@ const app = express();
 app.use(morgan(':remote-addr - :remote-user [:date[web]] ":method :url HTTP/:http-version" :status :res[content-length]'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+const corsOptions = {
+    origin: '*',
+    credentials: true,
+};
+app.use(cors(corsOptions));
 
 app.use('/api/v1', routes);
 

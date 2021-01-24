@@ -1,5 +1,5 @@
-#!/bin/bash
-set -e
+#!/bin/sh
+#set -e
 INPUT=/tmp/data.csv
 
 mongo <<EOF

@@ -12,8 +12,8 @@ const {
 const router = express.Router();
 
 
-router.get('/', async (req, res, next) => {
-    const countryCode = req.query.countryCode;
+router.get('/countries/:countryCode', async (req, res, next) => {
+    const countryCode = req.params.countryCode;
 
     try {
 
@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
         const covidInfos = await CovidInfoService.getByCountryCode(countryCode);
         res.json(covidInfos);
     } catch (err) {
-        // daca primesc eroare, pasez eroarea mai departe la handler-ul de errori declarat ca middleware in start.js 
+        // daca primesc eroare, pasez eroarea mai departe la handler-ul de errori declarat ca middleware in start.js
         next(err);
     }
 });

@@ -4,9 +4,9 @@ const {
 
 const getByCountryCode = async (countryCode) => {
     // get info by country code
-    const covidInfos = await CovidInfos.find({countriesAndTerritories: countryCode}).sort({year_week: 1})
+    const covidInfos = await CovidInfos.find({countryterritoryCode: countryCode}).sort({year_week: 1})
     return covidInfos.map(info => {
-        fields = info.year_week.split("-");
+        const fields = info.year_week.split("-");
         return {
             year: fields[0],
             week: fields[1],
