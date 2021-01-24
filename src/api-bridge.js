@@ -13,3 +13,15 @@ export async function getCountryData(countryId) {
   );
   return response.data;
 }
+
+export async function getAll() {
+  const response = await axios.get(
+      `${apiRoute}/countries`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+  );
+  return response.data;
+}
