@@ -18,7 +18,7 @@ const getByCountryCode = async (countryCode) => {
 };
 
 const getAll = async () => {
-    covidInfosMap = {};
+    const covidInfosMap = {};
     const covidInfos = await CovidInfos.find().sort({countryterritoryCode: 1});
 
     covidInfos.map(info => {
@@ -33,8 +33,6 @@ const getAll = async () => {
             covidInfosMap[info.countryterritoryCode].rate = parseFloat((covidInfosMap[info.countryterritoryCode].cases * 1000 / parseInt(info.popData2019)).toFixed(2));
         }
     });
-
-
 
     return covidInfosMap;
 };

@@ -17,35 +17,25 @@ const Dashboard = () => {
 
   const loadCountriesColors = async () => {
     const data = await getAll();
-    console.log("Loading data for all countrie: ", data);
-    var keys = Object.keys(data);
-    var cases = [];
-    keys.forEach(function(key){
-      cases.push(data[key].cases);
-    });
 
-    var minValue = Math.min.apply(null, cases),
-    maxValue = Math.max.apply(null, cases);
+    let cases = Object.entries(data).map(([key, countryData]) => countryData.cases);
+    let minValue = Math.min.apply(null, cases),
+        maxValue = Math.max.apply(null, cases);
 
     // create color palette function
-    // color can be whatever you wish
-    var paletteScale = scaleLog().domain([minValue, maxValue]).range([0, 1, 0.1]); // red color
+    let paletteScale = scaleLog().domain([minValue, maxValue]).range([0, 1, 0.1]); // red color
 
-    var dataset = {};
     // fill dataset in appropriate format
-    var keys = Object.keys(data);
-    keys.forEach(function(key){ //
-      var iso = key,
-      cases = data[key].cases,
-      deaths = data[key].deaths,
-      rate = data[key].rate;
-      dataset[iso] = { cases: cases, deaths: deaths, rate: rate, fillColor: interpolateTurbo(paletteScale(cases)) };
-    });
-    setCountriesData(dataset);
+    Object.keys(data).forEach(key => key && (data[key].fillColor = interpolateTurbo(paletteScale(data[key].cases))));
+    setCountriesData(data);
   };
 
+  // Execute only on mount
   useEffect(() => {
     loadCountriesColors();
+  }, []);
+
+  useEffect(() => {
     const map = new Datamap({
       element: document.getElementById('container'),
       fills: {
@@ -53,11 +43,11 @@ const Dashboard = () => {
       },
       data: generalData,
       geographyConfig: {
-        popupTemplate: function(geo, data) {
-            return ['<div class="hoverinfo">' + geo.properties.name,
-            '<br/>' +  data.cases + ' Confirmed cases',
-            '<br/>' +  data.deaths + ' Deaths',
-            '<br/>' +  data.rate + ' Infection rate per 1000 people',
+        popupTemplate: function (geo, data) {
+          return ['<div class="hoverinfo">' + geo.properties.name,
+            '<br/>' + data.cases + ' Confirmed cases',
+            '<br/>' + data.deaths + ' Deaths',
+            '<br/>' + data.rate + ' Infection rate per 1000 people',
             '</div>'].join('');
         }
       },
