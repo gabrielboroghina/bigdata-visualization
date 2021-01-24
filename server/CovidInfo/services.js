@@ -16,6 +16,29 @@ const getByCountryCode = async (countryCode) => {
     });
 };
 
+const getAll = async () => {
+    covidInfosMap = {};
+    const covidInfos = await CovidInfos.find().sort({countryterritoryCode: 1});
+
+    covidInfos.map(info => {
+        if (covidInfosMap[info.countryterritoryCode] == null) {
+            covidInfosMap[info.countryterritoryCode] = {
+                deaths: parseInt(info.deaths_weekly),
+                cases: parseInt(info.cases_weekly),
+            };
+        } else {
+            covidInfosMap[info.countryterritoryCode].deaths += parseInt(info.deaths_weekly);
+            covidInfosMap[info.countryterritoryCode].cases += parseInt(info.cases_weekly);
+            covidInfosMap[info.countryterritoryCode].rate = parseFloat((covidInfosMap[info.countryterritoryCode].cases * 1000 / parseInt(info.popData2019)).toFixed(2));
+        }
+    });
+
+
+
+    return covidInfosMap;
+};
+
 module.exports = {
-    getByCountryCode
+    getByCountryCode,
+    getAll
 }

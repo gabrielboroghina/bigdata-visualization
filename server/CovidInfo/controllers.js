@@ -31,5 +31,15 @@ router.get('/countries/:countryCode', async (req, res, next) => {
     }
 });
 
+router.get('/countries', async (req, res, next) => {
+    try {
+        const covidInfos = await CovidInfoService.getAll();
+        res.json(covidInfos);
+    } catch (err) {
+        // daca primesc eroare, pasez eroarea mai departe la handler-ul de errori declarat ca middleware in start.js
+        next(err);
+    }
+});
+
 
 module.exports = router;
