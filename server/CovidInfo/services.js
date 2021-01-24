@@ -20,7 +20,8 @@ const getByCountryCode = async (countryCode) => {
 
 const getAll = async () => {
     const covidInfosMap = {};
-    const covidInfos = await CovidInfos.find().sort({countryterritoryCode: 1});
+    let covidInfos = await CovidInfos.find().sort({countryterritoryCode: 1});
+    covidInfos = covidInfos.filter(info => info.countryterritoryCode.length);
 
     covidInfos.map(info => {
         if (covidInfosMap[info.countryterritoryCode] == null) {
@@ -44,7 +45,7 @@ const getAgeCategoriesByCountry = async (countryCode) => {
     console.log(countryEntry);
     const countryName = countryEntry.countriesAndTerritories;
 
-    covidInfosMap = {
+    const covidInfosMap = {
         "<15yr": {},
         "15-24yr": {},
         "25-49yr": {},

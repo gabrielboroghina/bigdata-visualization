@@ -25,3 +25,15 @@ export async function getAll() {
   );
   return response.data;
 }
+
+export async function getCountryByAgeGroups(countryId) {
+  const response = await axios.get(
+      `${apiRoute}/countries/ages/${countryId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+  );
+  return response.data;
+}

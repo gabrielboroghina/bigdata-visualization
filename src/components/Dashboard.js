@@ -2,8 +2,9 @@ import React, {useEffect, useState} from "react";
 import * as Datamap from "datamaps";
 import {scaleLog, interpolateTurbo} from 'd3'
 
-import {getCountryData, getAll} from "../api-bridge";
+import {getCountryData, getAll, getCountryByAgeGroups} from "../api-bridge";
 import {BarChart} from "./BarChart";
+import {Sunburst} from "./Sunburst";
 
 const Dashboard = () => {
   const [countryData, setCountryData] = useState(null);
@@ -11,8 +12,9 @@ const Dashboard = () => {
 
   const loadCountryData = async (countryId) => {
     const data = await getCountryData(countryId);
-    console.log("Loading data for country: ", countryId, data);
-    setCountryData(data);
+    const dataByAgeGroups = await getCountryByAgeGroups(countryId);
+    console.log("Loading data for country: ", countryId, data, dataByAgeGroups);
+    setCountryData([data, dataByAgeGroups]);
   };
 
   const loadCountriesColors = async () => {
@@ -33,6 +35,7 @@ const Dashboard = () => {
   // Execute only on mount
   useEffect(() => {
     loadCountriesColors();
+    loadCountryData("ROU"); // Default country
   }, []);
 
   useEffect(() => {
@@ -54,7 +57,6 @@ const Dashboard = () => {
       done: datamap => {
         datamap.svg.selectAll('.datamaps-subunit').on('click', geography => {
           const countryId = geography.id;
-          const countryName = geography.properties.name;
           loadCountryData(countryId);
         });
       }
@@ -67,20 +69,27 @@ const Dashboard = () => {
 
   return (
       <div className="content">
-        <div className="app-card">
-          <div className="map-chart">
-            <div id="container" style={{position: "relative", height: "100%"}}/>
+
+        <div style={{display: "flex", flexDirection:"column"}}>
+          <p className="subtitle">Number of infections heatmap</p>
+          <div className="app-card">
+            <div className="map-chart">
+              <div id="container" style={{position: "relative", height: "100%"}}/>
+            </div>
           </div>
         </div>
 
         <div className="app-row">
           <div className="app-col">
-            <div className="app-card" style={{padding: "10px 10px 20px 10px", height: 400}}>
-              <BarChart data={countryData}/>
+            <p className="subtitle">Evolution of infections/deaths over the weeks</p>
+            <div className="app-card small-chart">
+              <BarChart data={countryData?.[0]}/>
             </div>
           </div>
           <div className="app-col">
-            <div className="app-card">
+            <p className="subtitle">New cases distribution by age groups</p>
+            <div className="app-card small-chart">
+              <Sunburst data={countryData?.[1]}/>
             </div>
           </div>
         </div>
