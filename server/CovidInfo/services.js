@@ -1,5 +1,6 @@
 const {
-    CovidInfos
+    CovidInfos,
+    CovidInfosAge
 } = require('../data');
 
 const getByCountryCode = async (countryCode) => {
@@ -34,12 +35,33 @@ const getAll = async () => {
         }
     });
 
+    return covidInfosMap;
+};
 
 
+const getAgeCategoriesByCountry = async (countryCode) => {
+    const countryEntry = await CovidInfos.findOne({countryterritoryCode: countryCode})
+    console.log(countryEntry);
+    const countryName = countryEntry.countriesAndTerritories;
+
+    covidInfosMap = {
+        "<15yr": {},
+        "15-24yr": {},
+        "25-49yr": {},
+        "50-64yr": {},
+        "65-79yr": {},
+        "80+yr": {}
+    };
+    // get info by country code
+    const covidInfos = await CovidInfosAge.find({country: countryName}).sort({age_category: 1, year_week: 1});
+    covidInfos.map(info => {
+        covidInfosMap[info.age_group][info.year_week] = parseInt(info.new_cases);
+    });
     return covidInfosMap;
 };
 
 module.exports = {
     getByCountryCode,
-    getAll
+    getAll,
+    getAgeCategoriesByCountry,
 }

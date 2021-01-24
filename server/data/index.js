@@ -14,7 +14,9 @@ const mongoose = require('mongoose');
 })();
 
 const CovidInfos = require('./models/CovidInfo.js');
+const CovidInfosAge = require('./models/CovidInfoPerAge.js');
 
 module.exports = {
-  CovidInfos
+  CovidInfos,
+  CovidInfosAge
 }

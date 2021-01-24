@@ -1,6 +1,7 @@
 #!/bin/sh
 #set -e
-INPUT=/tmp/data.csv
+INPUT1=/tmp/data.csv
+INPUT2=/tmp/data2.csv
 
 mongo <<EOF
 use '$MONGO_INITDB_DATABASE'
@@ -14,5 +15,6 @@ db.createUser({
 })
 EOF
 
-mongoimport --type csv -d $MONGO_INITDB_DATABASE -c covidinfos --headerline --drop $INPUT
+mongoimport --type csv -d $MONGO_INITDB_DATABASE -c covidinfos --headerline --drop $INPUT1
+mongoimport --type csv -d $MONGO_INITDB_DATABASE -c covidinfosages --headerline --drop $INPUT2
 

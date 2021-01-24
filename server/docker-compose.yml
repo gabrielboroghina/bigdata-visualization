@@ -13,6 +13,7 @@ services:
       - mongo_vol:/data/db
       - ./mongo_init.sh:/docker-entrypoint-initdb.d/mongo_init.sh
       - ./data.csv:/tmp/data.csv
+      - ./data2.csv:/tmp/data2.csv
 
   mongo-express:
     image: mongo-express
