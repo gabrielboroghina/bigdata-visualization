@@ -1,12 +1,27 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import * as Datamap from "datamaps";
-
-// import BarChart from "./visualization/BarChart";
-// import {ChartComp} from "./visualization/visualization";
+import {BarChart} from "./visualization/visualization";
+import {getCountryData} from "./api-bridge";
 
 const Dashboard = () => {
+  const [countryData, setCountryData] = useState(null);
+
+  // const [dimensions, setDimensions] = useState({
+  //   height: window.innerHeight,
+  //   width: window.innerWidth
+  // });
+  // useEffect(() => {
+  //   const handleResize = () => setDimensions({
+  //     height: window.innerHeight,
+  //     width: window.innerWidth
+  //   });
+  //   window.addEventListener('resize', handleResize);
+  // });
+
   const loadCountryData = async (countryId) => {
-    console.log("Loading data for country: ", countryId);
+    const data = await getCountryData(countryId);
+    console.log("Loading data for country: ", countryId, data);
+    setCountryData(data);
   };
 
   useEffect(() => {
@@ -20,6 +35,10 @@ const Dashboard = () => {
         });
       }
     });
+
+    return function cleanup() {
+      document.getElementById("container").innerHTML = "";
+    };
   });
 
   return (
@@ -30,18 +49,18 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="app-row">
-          <div className="app-col">
-            <div className="app-card">
-              chart
-            </div>
-          </div>
-          <div className="app-col">
-            <div className="app-card">
-              chart
-            </div>
-          </div>
-        </div>
+        {/*<div className="app-row">*/}
+        {/*  <div className="app-col">*/}
+        {/*    <div className="app-card">*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*  <div className="app-col">*/}
+        {/*    <div className="app-card">*/}
+        {/*      chart*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+        {/*<BarChart data={countryData}/>*/}
       </div>
   )
 };

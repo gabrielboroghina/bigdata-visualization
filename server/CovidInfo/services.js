@@ -10,6 +10,7 @@ const getByCountryCode = async (countryCode) => {
         return {
             year: fields[0],
             week: fields[1],
+            year_week: info.year_week,
             cases: info.cases_weekly,
             deaths: info.deaths_weekly
         };
