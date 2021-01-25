@@ -27,5 +27,14 @@ services:
     logging:
       driver: none
 
+  spark-master:
+    image: spark
+    ports:
+      - 8085:8080
+      - 7077:7077
+    volumes:
+      - spark_vol:/opt/workspace
+
 volumes:
   mongo_vol:
+  spark_vol:

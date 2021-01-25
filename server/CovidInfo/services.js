@@ -1,7 +1,11 @@
 const {
     CovidInfos,
-    CovidInfosAge
+    CovidInfosAge,
+    CovidInfosAgg
 } = require('../data');
+const axios = require("axios");
+
+const sparkRoute = "http://localhost:7777";
 
 const getByCountryCode = async (countryCode) => {
     // get info by country code
@@ -61,8 +65,27 @@ const getAgeCategoriesByCountry = async (countryCode) => {
     return covidInfosMap;
 };
 
+const fetchAggregatedData = async () => {
+    const response = await axios.get(
+        `${sparkRoute}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }
+    );
+    const data = response.data;
+
+    CovidInfosAgg.deleteMany({}, (err) => console.log(err)).then(()=> {
+        CovidInfosAgg.insertMany(data, (err, result ) => {console.log(err, result)});
+    });
+    console.log("Data fetched from Spark");
+    return data;
+}
+
 module.exports = {
     getByCountryCode,
     getAll,
     getAgeCategoriesByCountry,
+    fetchAggregatedData,
 }

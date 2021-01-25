@@ -58,13 +58,22 @@ router.get('/countries', async (req, res, next) => {
     }
 });
 
+router.get('/fetchdata', async (req, res, next) => {
+    try {
+        const covidInfos = await CovidInfoService.fetchAggregatedData();
+        res.json(covidInfos);
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.post('/countries/ages', async (req, res, next) => {
 
     try{
         await CovidInfoService.add();
         res.status(204).end();
     } catch (err) {
-        // daca primesc eroare, pasez eroarea mai departe la handler-ul de errori declarat ca middleware in start.js 
+        // daca primesc eroare, pasez eroarea mai departe la handler-ul de errori declarat ca middleware in start.js
         console.log(err.message);
         next(err);
     }
