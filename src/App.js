@@ -26,9 +26,11 @@ function App() {
             <div className="column">
               <h5 className="footer-text">Contact</h5>
               <p style={{fontSize: "small", margin: "0 0"}}>
-                Email: <a href='mailto:'>covid19@gmail.com</a>
+                Gabriel Boroghină: <a href='mailto:'>gabrielboroghina@outlook.com</a>
                 <br/>
-                Tel: <a href='tel:'>+40123456789</a>
+                Mihaela Catrina: <a href='mailto:'>catrina.mihaela@gmail.com</a>
+                <br/>
+                Valentin Piele: <a href='mailto:'>valentin_piele97@yahoo.com</a>
               </p>
             </div>
           </div>

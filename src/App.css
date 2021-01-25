@@ -9,6 +9,7 @@
     background-color: #361f64;
     min-height: 50px;
     padding: 0 10px;
+    margin-bottom: 10px;
 
     display: flex;
     flex-direction: row;
@@ -20,20 +21,14 @@
 }
 
 .footer {
+    background-color: #202020;
     color: white;
     min-height: 100px;
-    padding: 10px 30px;
+    padding: 20px 30px;
     margin-top: 20px;
     display: flex;
-}
-
-.footer {
-    background-color: #202020;
-
     flex-shrink: 0;
     width: 100%;
-    display: flex;
-    padding-bottom: 10px;
 }
 
 .centerBox {
@@ -123,6 +118,12 @@ svg .rect {
 }
 
 .subtitle {
-    font-size: 22px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
     margin: 15px 15px 5px 15px;
+    padding-left: 10px;
+}
+
+.legend-title {
+    font-size: 15px;
 }
